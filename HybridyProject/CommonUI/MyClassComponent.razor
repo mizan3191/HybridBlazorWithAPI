@@ -1,0 +1,42 @@
+﻿@using CommonUI.Services
+@using Microsoft.AspNetCore.Components.Forms
+
+<h3>MyClassComponent</h3>
+
+<EditForm Model="MyClass" OnSubmit="HandleSubmit">
+    <h3 class="text-center"> My Class </h3>
+    <div class="card dataForm ">
+        <div class="row m-3 ">
+             <div class="col-md-4 mb-3">
+                <label>House Number</label>
+                <InputText @bind="MyClass.Name" class="form-control"></InputText>
+            </div> 
+            <div class="col-md-4 mb-3">
+                <label>Description</label>
+                <InputText @bind="MyClass.Description" class="form-control"></InputText>
+            </div>
+
+            <br />
+            <div>
+                <button type="submit" class="btn btn-primary m-2">Save</button>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    [Inject]
+    public IMyClassServices MyClassService { get; set; }
+
+    public MyClass MyClass { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        MyClass = new();
+    }
+
+    public async Task HandleSubmit()
+    {
+        MyClassService.CreateMyClass(MyClass);
+    }
+}
