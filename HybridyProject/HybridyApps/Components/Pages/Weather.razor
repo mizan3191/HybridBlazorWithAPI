@@ -1,10 +1,12 @@
 ﻿@page "/weather"
+@using HybridyApps.MyServices
+@using WebDomain
 
 <h1>Weather</h1>
 
 <p>This component demonstrates showing data.</p>
 
-@if (forecasts == null)
+@if (MyClasses == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -13,20 +15,16 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th>Name</th>
+                <th>Description</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var forecast in MyClasses)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <td>@forecast.Name</td>
+                    <td>@forecast.Description</td>
                 </tr>
             }
         </tbody>
@@ -34,28 +32,13 @@ else
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
+    [Inject]
+    private IMyHybridClassServices Services { get; set; }
+
+    public IEnumerable<MyClass> MyClasses { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        // Simulate asynchronous loading to demonstrate a loading indicator
-        await Task.Delay(500);
-
-        var startDate = DateOnly.FromDateTime(DateTime.Now);
-        var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
-        forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        {
-            Date = startDate.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = summaries[Random.Shared.Next(summaries.Length)]
-        }).ToArray();
-    }
-
-    private class WeatherForecast
-    {
-        public DateOnly Date { get; set; }
-        public int TemperatureC { get; set; }
-        public string? Summary { get; set; }
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        MyClasses = await Services.GetMyClassess();
     }
 }

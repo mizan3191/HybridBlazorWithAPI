@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using HybridyApps.MyServices;
+using Microsoft.Extensions.Logging;
 
 namespace HybridyApps
 {
@@ -15,7 +16,13 @@ namespace HybridyApps
                 });
 
             builder.Services.AddMauiBlazorWebView();
-            //builder.Services.AddScoped<IMyClassServices, MyServices>();
+            builder.Services.AddScoped<IMyHybridClassServices, MyHybridServices>();
+
+            // Register HttpClient with a named configuration
+            builder.Services.AddHttpClient<IMyHybridClassServices, MyHybridServices>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:44390/api/");
+            });
 
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
