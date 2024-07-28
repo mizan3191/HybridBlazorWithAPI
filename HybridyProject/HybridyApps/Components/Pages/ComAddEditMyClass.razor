@@ -1,17 +1,15 @@
-﻿@page "/MyComponent"
-@page "/MyComponent/{Id:int}"
+﻿@page "/AddEditMyClass"
+@page "/AddEditMyClass/{Id:int}"
 
 @using HybridyApps.MyServices
 @using WebDomain
-
-<h3>MyComponent</h3>
 
 <EditForm Model="@MyClass" OnValidSubmit="HandleSubmit">
     <h3 class="text-center"> My Class </h3>
     <div class="card dataForm ">
         <div class="row m-3 ">
             <div class="col-md-4 mb-3">
-                <label>House Number</label>
+                <label>Class Name</label>
                 <InputText @bind-Value="MyClass.Name" class="form-control"></InputText>
             </div>
             <div class="col-md-4 mb-3">
@@ -41,7 +39,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if (Id.Value > 0)
+        if (Id.HasValue && Id.Value > 0)
         {
             MyClass = await Services.GetMyClass(Id.Value);
         }
@@ -53,7 +51,7 @@
 
     public async Task HandleSubmit()
     {
-        if (Id.Value > 0)
+        if (Id.HasValue &&  Id.Value > 0)
         {
             await Services.UpdateMyClass(MyClass);
         }
@@ -62,6 +60,6 @@
             await Services.CreateMyClass(MyClass);
         }
 
-        _navigationManager.NavigateTo("/weather");
+        _navigationManager.NavigateTo("/MyClassList");
     }
 }

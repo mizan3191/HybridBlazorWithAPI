@@ -23,7 +23,7 @@ namespace HybridyApps.MyServices
                     var response = await _httpClient.PostAsJsonAsync("Values", product);
                     if (response.IsSuccessStatusCode)
                     {
-                        _navigationManager.NavigateTo("weather");
+                        _navigationManager.NavigateTo("MyClassList");
                     }
                     else
                     {
@@ -45,7 +45,7 @@ namespace HybridyApps.MyServices
                     var response = await _httpClient.PutAsJsonAsync($"Values/{product.Id}", product);
                     if (response.IsSuccessStatusCode)
                     {
-                        _navigationManager.NavigateTo("weather");
+                        _navigationManager.NavigateTo("MyClassList");
                     }
                     else if (response.StatusCode == HttpStatusCode.NotFound)
                     {
@@ -71,7 +71,7 @@ namespace HybridyApps.MyServices
                     var response = await _httpClient.DeleteAsync($"Values/{id}");
                     if (response.IsSuccessStatusCode)
                     {
-                        _navigationManager.NavigateTo("weather");
+                        _navigationManager.NavigateTo("MyClassList");
                     }
                     else if (response.StatusCode == HttpStatusCode.NotFound)
                     {

@@ -1,7 +1,9 @@
 ﻿@using System.Net.Http.Json
 @using WebDomain
 
-@if (MyClasses == null)
+<h3>PersonList</h3>
+
+@if (People == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -11,19 +13,17 @@ else
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Description</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in MyClasses)
+            @foreach (var item in People)
             {
                 <tr>
-                    <td>@forecast.Name</td>
-                    <td>@forecast.Description</td>
+                    <td>@item.Name</td>
                     <td>
-                        <button class="btn btn-primary" @onclick="() => Edit(forecast.Id)">Edit</button>
-                        <button class="btn btn-danger" @onclick="() => Delete(forecast.Id)">Delete</button>
+                        <button class="btn btn-primary" @onclick="() => Edit(item.Id)">Edit</button>
+                        <button class="btn btn-danger" @onclick="() => Delete(item.Id)">Delete</button>
                     </td>
                 </tr>
             }
@@ -38,21 +38,21 @@ else
     [Inject]
     private NavigationManager _navigationManager { get; set; }
 
-    public IEnumerable<MyClass> MyClasses { get; set; }
+    public IEnumerable<Person> People { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            var response = await _httpClient.GetAsync("Values");
+            var response = await _httpClient.GetAsync("Persons");
             if (response.IsSuccessStatusCode)
             {
                 if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
                 {
-                    MyClasses = Enumerable.Empty<MyClass>();
+                    People = Enumerable.Empty<Person>();
                 }
 
-                MyClasses = await response.Content.ReadFromJsonAsync<IEnumerable<MyClass>>();
+                People = await response.Content.ReadFromJsonAsync<IEnumerable<Person>>();
             }
             else
             {
@@ -71,17 +71,17 @@ else
 
     private void Edit(int id)
     {
-        _navigationManager.NavigateTo($"/CommonAddEdit/{id}");
+        _navigationManager.NavigateTo($"/AddEditPerson/{id}");
     }
 
     private async Task Delete(int id)
     {
         try
         {
-            var response = await _httpClient.DeleteAsync($"Values/{id}");
+            var response = await _httpClient.DeleteAsync($"Persons/{id}");
             if (response.IsSuccessStatusCode)
             {
-                _navigationManager.NavigateTo("CommomList");
+                _navigationManager.NavigateTo("PersonList");
             }
             else
             {

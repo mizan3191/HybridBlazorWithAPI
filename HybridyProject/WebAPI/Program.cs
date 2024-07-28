@@ -14,6 +14,7 @@ builder.Services.AddDbContext<WebContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("WebAPIDB")));
 
 builder.Services.AddScoped<IMyClass, MyManager>();
+builder.Services.AddScoped<IPerson, PersonManager>();
 
 var app = builder.Build();
 

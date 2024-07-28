@@ -1,9 +1,11 @@
-﻿@page "/CommonAddEdit"
-@page "/CommonAddEdit/{Id:int}"
+﻿@page "/AddEditPerson"
+@page "/AddEditPerson/{Id:int}"
+
+@rendermode InteractiveServer
 
 @if (Id.HasValue)
 {
-    <CommonUI.MyClassComponent Id="@Id.Value"></CommonUI.MyClassComponent>
+    <CommonUI.AddEditPerson Id="@Id.Value"></CommonUI.AddEditPerson>
 }
 else
 {

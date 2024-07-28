@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HybridyApps", "HybridyApps\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonUI", "CommonUI\CommonUI.csproj", "{7BD4507A-41A9-4AA5-ACEC-F5FBE9C0C0B3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HybridyWeb", "HybridyWeb\HybridyWeb.csproj", "{CD78C5D1-9EC6-4813-A60E-5049BF28EBB2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{7BD4507A-41A9-4AA5-ACEC-F5FBE9C0C0B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BD4507A-41A9-4AA5-ACEC-F5FBE9C0C0B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7BD4507A-41A9-4AA5-ACEC-F5FBE9C0C0B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD78C5D1-9EC6-4813-A60E-5049BF28EBB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD78C5D1-9EC6-4813-A60E-5049BF28EBB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD78C5D1-9EC6-4813-A60E-5049BF28EBB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD78C5D1-9EC6-4813-A60E-5049BF28EBB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

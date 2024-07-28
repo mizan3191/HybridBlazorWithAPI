@@ -1,10 +1,6 @@
-﻿@page "/weather"
+﻿@page "/MyClassList"
 @using HybridyApps.MyServices
 @using WebDomain
-
-<h1>Weather</h1>
-
-<p>This component demonstrates showing data.</p>
 
 @if (MyClasses == null)
 {
@@ -52,7 +48,7 @@ else
 
     private void Edit(int id)
     {
-        _navigationManager.NavigateTo($"/MyComponent/{id}");
+        _navigationManager.NavigateTo($"/AddEditMyClass/{id}");
     }
 
     private async Task Delete(int id)

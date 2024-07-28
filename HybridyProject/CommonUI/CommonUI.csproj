@@ -6,6 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="Services\AddEditPerson.razor" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />
@@ -18,6 +22,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebDomain\WebDomain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Services\AddEditPerson.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Services\AddEditPerson.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="AddEditPerson.razor" />
   </ItemGroup>
 
 </Project>
