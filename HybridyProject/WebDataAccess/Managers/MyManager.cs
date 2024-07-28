@@ -27,11 +27,10 @@
             return _dbContext.MyClasses.ToList();
         }
 
-        public bool DeleteMyClass(int id)
+        public bool DeleteMyClass(MyClass myClass)
         {
-            var entity = _dbContext.MyClasses.SingleOrDefault(c => c.Id == id);
-            _dbContext.Remove(entity);
-
+            _dbContext.Remove(myClass);
+            _dbContext.SaveChanges();
             return true;
         }
     }

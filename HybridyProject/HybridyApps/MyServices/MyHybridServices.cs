@@ -75,7 +75,7 @@ namespace HybridyApps.MyServices
                     }
                     else if (response.StatusCode == HttpStatusCode.NotFound)
                     {
-                        throw new Exception("Category not found.");
+                        throw new Exception("My Class not found.");
                     }
                     else
                     {

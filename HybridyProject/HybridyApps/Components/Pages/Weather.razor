@@ -17,6 +17,7 @@ else
             <tr>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +26,10 @@ else
                 <tr>
                     <td>@forecast.Name</td>
                     <td>@forecast.Description</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => Edit(forecast.Id)">Edit</button>
+                        <button class="btn btn-danger" @onclick="() => Delete(forecast.Id)">Delete</button>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -35,10 +40,23 @@ else
     [Inject]
     private IMyHybridClassServices Services { get; set; }
 
+    [Inject]
+    private NavigationManager _navigationManager { get; set; }
+
     public IEnumerable<MyClass> MyClasses { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         MyClasses = await Services.GetMyClassess();
+    }
+
+    private void Edit(int id)
+    {
+        _navigationManager.NavigateTo($"/MyComponent/{id}");
+    }
+
+    private async Task Delete(int id)
+    {
+        await Services.DeleteMyClass(id);
     }
 }

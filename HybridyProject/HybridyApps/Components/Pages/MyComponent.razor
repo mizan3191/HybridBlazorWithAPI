@@ -1,4 +1,6 @@
 ﻿@page "/MyComponent"
+@page "/MyComponent/{Id:int}"
+
 @using HybridyApps.MyServices
 @using WebDomain
 
@@ -26,14 +28,40 @@
 </EditForm>
 
 @code {
+    [Parameter]
+    public int? Id { get; set; }
+
     [Inject]
     private IMyHybridClassServices Services{ get; set; }
 
+    [Inject]
+    private NavigationManager _navigationManager { get; set; }
 
     public MyClass MyClass = new MyClass();
 
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id.Value > 0)
+        {
+            MyClass = await Services.GetMyClass(Id.Value);
+        }
+        else
+        {
+            MyClass = new MyClass();
+        }
+    }
+
     public async Task HandleSubmit()
     {
-        Services.CreateMyClass(MyClass);
+        if (Id.Value > 0)
+        {
+            await Services.UpdateMyClass(MyClass);
+        }
+        else
+        {
+            await Services.CreateMyClass(MyClass);
+        }
+
+        _navigationManager.NavigateTo("/weather");
     }
 }

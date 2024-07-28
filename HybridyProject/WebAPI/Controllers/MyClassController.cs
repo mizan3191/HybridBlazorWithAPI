@@ -1,4 +1,6 @@
-﻿namespace WebAPI.Controllers
+﻿using WebDomain;
+
+namespace WebAPI.Controllers
 {
     public class MyClassController : Controller
     {
@@ -53,7 +55,12 @@
             {
                 if (id > 0)
                 {
-                    _service.DeleteMyClass(id);
+                    var entity = _service.GetMyClass(id);
+                    if (entity == null)
+                    {
+                        return NotFound();
+                    }
+                    _service.DeleteMyClass(entity);
                     return Ok();
                 }
                 else

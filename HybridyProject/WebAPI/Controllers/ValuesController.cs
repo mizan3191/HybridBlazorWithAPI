@@ -33,12 +33,12 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(MyClass myClass)
+        public async Task<ActionResult> Update(int id, MyClass myClass)
         {
             try
             {
-                if (myClass == null)
-                    return BadRequest("Product not found");
+                if (myClass == null || id<=0 )
+                    return BadRequest("My Class not found");
 
                 _service.UpdateMyClass(myClass);
                 return Ok();
@@ -57,7 +57,12 @@ namespace WebAPI.Controllers
             {
                 if (id > 0)
                 {
-                    _service.DeleteMyClass(id);
+                   var entity =  _service.GetMyClass(id);
+                    if (entity == null)
+                    {
+                        return NotFound();
+                    }
+                    _service.DeleteMyClass(entity);
                     return Ok();
                 }
                 else

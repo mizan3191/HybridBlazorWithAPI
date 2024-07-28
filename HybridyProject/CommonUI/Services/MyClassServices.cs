@@ -4,12 +4,12 @@ using System.Net;
 
 namespace CommonUI.Services
 {
-    public class MyServices : IMyClassServices
+    public class MyClassServices : IMyClassServices
     {
         private readonly HttpClient _httpClient;
         private readonly NavigationManager _navigationManager;
 
-        public MyServices(HttpClient httpClient, NavigationManager navigationManager)
+        public MyClassServices(HttpClient httpClient, NavigationManager navigationManager)
         {
             _httpClient = httpClient;
             _navigationManager = navigationManager;
@@ -19,7 +19,7 @@ namespace CommonUI.Services
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync("https://localhost:44314/api/Products", product);
+                var response = await _httpClient.PostAsJsonAsync("https://localhost:44314/api/Values", product);
                 if (response.IsSuccessStatusCode)
                 {
                     _navigationManager.NavigateTo("ProductList");
@@ -41,7 +41,7 @@ namespace CommonUI.Services
         {
             try
             {
-                var response = await _httpClient.PutAsJsonAsync($"https://localhost:44314/api/Products/{product.Id}", product);
+                var response = await _httpClient.PutAsJsonAsync($"https://localhost:44314/api/Values/{product.Id}", product);
                 if (response.IsSuccessStatusCode)
                 {
                     _navigationManager.NavigateTo("ProductList");
@@ -67,7 +67,7 @@ namespace CommonUI.Services
         {
             try
             {
-                var response = await _httpClient.DeleteAsync($"https://localhost:44314/api/Products/{id}");
+                var response = await _httpClient.DeleteAsync($"https://localhost:44314/api/Values/{id}");
                 if (response.IsSuccessStatusCode)
                 {
                     _navigationManager.NavigateTo("ProductList");
@@ -93,7 +93,7 @@ namespace CommonUI.Services
         {
             try
             {
-                var response = await _httpClient.GetAsync($"https://localhost:44314/api/Products/{id}");
+                var response = await _httpClient.GetAsync($"https://localhost:44314/api/Values/{id}");
                 if (response.IsSuccessStatusCode)
                 {
                     if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
@@ -120,7 +120,7 @@ namespace CommonUI.Services
         {
             try
             {
-                var response = await _httpClient.GetAsync(new Uri("https://localhost:44314/api/Products"));
+                var response = await _httpClient.GetAsync(new Uri("https://localhost:44314/api/Values"));
                 if (response.IsSuccessStatusCode)
                 {
                     if (response.StatusCode == System.Net.HttpStatusCode.NoContent)

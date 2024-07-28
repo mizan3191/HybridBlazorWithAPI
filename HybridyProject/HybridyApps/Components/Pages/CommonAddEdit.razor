@@ -1,0 +1,26 @@
+﻿@page "/CommonAddEdit"
+@page "/CommonAddEdit/{Id:int}"
+
+@if (Id.HasValue)
+{
+    <CommonUI.MyClassComponent Id="@Id.Value"></CommonUI.MyClassComponent>
+}
+else
+{
+    <p>Id is not provided.</p>
+}
+
+@code {
+    [Parameter]
+    public int? Id { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        if (!Id.HasValue)
+        {
+            Id = 0;
+        }
+
+        return Task.CompletedTask;
+    }
+}

@@ -1,19 +1,17 @@
-﻿@using CommonUI.Services
-@using Microsoft.AspNetCore.Components.Forms
+﻿@using Microsoft.AspNetCore.Components.Forms
+@using System.Net.Http.Json
 
-<h3>MyClassComponent</h3>
-
-<EditForm Model="MyClass" OnSubmit="HandleSubmit">
+<EditForm Model="@MyClass" OnValidSubmit="HandleSubmit">
     <h3 class="text-center"> My Class </h3>
     <div class="card dataForm ">
         <div class="row m-3 ">
-             <div class="col-md-4 mb-3">
+            <div class="col-md-4 mb-3">
                 <label>House Number</label>
-                <InputText @bind="MyClass.Name" class="form-control"></InputText>
-            </div> 
+                <InputText @bind-Value="MyClass.Name" class="form-control"></InputText>
+            </div>
             <div class="col-md-4 mb-3">
                 <label>Description</label>
-                <InputText @bind="MyClass.Description" class="form-control"></InputText>
+                <InputText @bind-Value="MyClass.Description" class="form-control"></InputText>
             </div>
 
             <br />
@@ -25,18 +23,74 @@
 </EditForm>
 
 @code {
-    [Inject]
-    public IMyClassServices MyClassService { get; set; }
+    [Parameter]
+    public int Id { get; set; }
 
-    public MyClass MyClass { get; set; }
+    [Inject]
+    private HttpClient _httpClient { get; set; }
+
+    [Inject]
+    private NavigationManager _navigationManager { get; set; }
+
+    public MyClass MyClass { get; set; } = new MyClass();
 
     protected override async Task OnInitializedAsync()
     {
-        MyClass = new();
+        if (Id > 0)
+        {
+            var response = await _httpClient.GetAsync($"Values/{Id}");
+            if (response.IsSuccessStatusCode)
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                {
+                    MyClass = new MyClass();
+                }
+
+                MyClass = await response.Content.ReadFromJsonAsync<MyClass>();
+            }
+            else
+            {
+                var errorMessage = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Error: {errorMessage}");
+            }
+        }
     }
 
     public async Task HandleSubmit()
     {
-        MyClassService.CreateMyClass(MyClass);
+        try
+        {
+            if (Id > 0)
+            {
+                var response = await _httpClient.PutAsJsonAsync($"Values/{MyClass.Id}", MyClass);
+                if (response.IsSuccessStatusCode)
+                {
+                    _navigationManager.NavigateTo("/CommomList");
+                }
+                else
+                {
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Error: {errorMessage}");
+                }
+            }
+            else
+            {
+                var response = await _httpClient.PostAsJsonAsync("Values", MyClass);
+                if (response.IsSuccessStatusCode)
+                {
+                    _navigationManager.NavigateTo("/CommomList");
+                }
+                else
+                {
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Error: {errorMessage}");
+                }
+            }
+           
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Exception: {ex.Message}");
+        }
     }
 }
