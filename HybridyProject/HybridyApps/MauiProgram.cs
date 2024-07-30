@@ -23,13 +23,13 @@ namespace HybridyApps
             // Register HttpClient with a named configuration
             builder.Services.AddHttpClient<IMyHybridClassServices, MyHybridServices>(client =>
             {
-                client.BaseAddress = new Uri("https://localhost:44390/api/");
+                client.BaseAddress = new Uri("https://ptvl9zw6-44390.euw.devtunnels.ms/api/");
             });
 
             // Add HttpClient
             builder.Services.AddHttpClient("API", client =>
             {
-                client.BaseAddress = new Uri("https://localhost:44390/api/");
+                client.BaseAddress = new Uri("https://ptvl9zw6-44390.euw.devtunnels.ms/api/");
             });
 
             // Register the custom service to access the API
